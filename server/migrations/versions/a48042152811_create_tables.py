@@ -1,8 +1,8 @@
-"""updated tables
+"""create tables
 
-Revision ID: 3d114c36cff0
+Revision ID: a48042152811
 Revises: 
-Create Date: 2023-07-17 14:29:17.831171
+Create Date: 2023-07-18 14:17:14.692941
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '3d114c36cff0'
+revision = 'a48042152811'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -42,11 +42,10 @@ def upgrade():
     sa.PrimaryKeyConstraint('id', name=op.f('pk_assignments'))
     )
     op.create_table('enrollments',
-    sa.Column('student_id', sa.Integer(), nullable=False),
-    sa.Column('course_id', sa.Integer(), nullable=False),
+    sa.Column('student_id', sa.Integer(), nullable=True),
+    sa.Column('course_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['course_id'], ['courses.id'], name=op.f('fk_enrollments_course_id_courses')),
-    sa.ForeignKeyConstraint(['student_id'], ['users.id'], name=op.f('fk_enrollments_student_id_users')),
-    sa.PrimaryKeyConstraint('student_id', 'course_id', name=op.f('pk_enrollments'))
+    sa.ForeignKeyConstraint(['student_id'], ['users.id'], name=op.f('fk_enrollments_student_id_users'))
     )
     op.create_table('grades',
     sa.Column('id', sa.Integer(), nullable=False),
