@@ -6,7 +6,7 @@ import Tasks from "./pages/Tasks";
 import Messages from "./pages/Messages";
 import Help from "./pages/Help";
 import Courses from "./pages/Courses";
-import Calendar from "./pages/Calendar";
+import CalendarPage from "./pages/CalendarPage";
 import AccountSettings from "./pages/AccountSettings";
 import ErrorPage from "./pages/ErrorPage";
 
@@ -18,7 +18,7 @@ function App() {
       </nav>
       <Routes>
         <Route exact path="/" element={<Courses />} />
-        <Route path="/calendar" element={<Calendar />} />
+        <Route path="/calendar" element={<CalendarPage />} />
         <Route path="/tasks" element={<Tasks />} />
         <Route path="/messages" element={<Messages />} />
         <Route path="/account/settings" element={<AccountSettings />} />
