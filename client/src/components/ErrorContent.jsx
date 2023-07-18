@@ -3,7 +3,7 @@ import React from "react";
 function ErrorContent() {
   return (
     <>
-      <div class="pl-24 pt-8">ErrorContent</div>
+      <h1 className="pl-24 pt-8 text-red-600 text-6xl">404: ERROR</h1>
     </>
   );
 }
