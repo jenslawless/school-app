@@ -19,6 +19,8 @@ metadata = MetaData(naming_convention=convention)
 db = SQLAlchemy(metadata=metadata)
 
 
+
+
 class User(db.Model, SerializerMixin):
     __tablename__ = "users"
 

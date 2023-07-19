@@ -9,12 +9,14 @@ import Courses from "./pages/Courses";
 import CalendarPage from "./pages/CalendarPage";
 import AccountSettings from "./pages/AccountSettings";
 import ErrorPage from "./pages/ErrorPage";
+import RightBar from "./components/RightBar";
 
 function App() {
   return (
     <Router>
       <nav>
         <NavBar />
+        <RightBar />
       </nav>
       <Routes>
         <Route exact path="/" element={<Courses />} />

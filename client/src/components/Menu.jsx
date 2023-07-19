@@ -7,7 +7,7 @@ function Menu() {
         <img
           className="h-10 w-10"
           src="https://www.svgrepo.com/show/511004/hamburger-md.svg"
-          onClick=""
+          // onClick=""
         />
         {/* {CourseName} */}
       </div>

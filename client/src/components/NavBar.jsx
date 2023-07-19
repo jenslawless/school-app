@@ -1,11 +1,18 @@
 import React, { useState } from "react";
+import LoginModal from "./LoginModal";
 
 function NavBar() {
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
+  const handleAccountClick = () => {
+    setShowLoginModal(true);
+  };
   return (
     <div className="flex flex-col fixed left-0 items-center w-20 pt-8 h-screen text-gray-700 bg-zinc-600 m-0">
       <a
         className="flex items-center justify-center w-12 h-12 m-2 bg-neutral-300 hover:bg-white"
-        href="/account/settings"
+        // href="/account/settings"
+        onClick={handleAccountClick}
       >
         <svg
           className="w-10 h-10 stroke-current"
@@ -23,6 +30,9 @@ function NavBar() {
         </svg>
       </a>
       <p className="items-center text-s text-gray-300">Account</p>
+
+      {/* Render the LoginModal conditionally */}
+      {showLoginModal && <LoginModal />}
 
       <div className="flex flex-col items-center border-t border-gray-300">
         <a
@@ -251,11 +261,6 @@ function NavBar() {
           </svg>
         </a>
         <p className=" items-center text-s text-gray-300 ">Help</p>
-      </div>
-      <div>
-        <div className="flex flex-col fixed right-0 items-center w-44 pt-8 h-screen text-gray-700 bg-white-600 m-0">
-          <img className="h-14 w-auto" src="./src/assets/mainlogo.png" />
-        </div>
       </div>
     </div>
   );
