@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios"; // Import axios for making API calls
+import { useLocation } from 'react-router-dom';
+
+
 
 function LoginModal() {
   // State and event listeners...
@@ -7,6 +10,7 @@ function LoginModal() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [showLoginModal, setShowLoginModal] = useState(true);
+  const [user, setUser] = useState(null)
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -22,33 +26,18 @@ function LoginModal() {
     };
   }, []);
 
-  // Define the login function for making the API call
-  const login = async (email, password) => {
-    try {
-      const response = await axios.post("/api/login", { email, password });
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  };
+  function handleSignIn(e) {
+    e.preventDefault()
+    fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, password: password })
+    })
+      .then((r) => r.json())
+      .then(data => setUser(data))
+    closeModal()
+  }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await login(email, password);
-
-      if (response.success) {
-        console.log("Login successful!");
-        closeModal();
-      } else {
-        setError("Invalid email or password");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      setError("An error occurred. Please try again later.");
-    }
-  };
 
   const closeModal = () => {
     setEmail("");
@@ -61,7 +50,7 @@ function LoginModal() {
     <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
       <div className="bg-white p-4 rounded shadow-md">
         <h2 className="text-xl font-bold mb-4">Login</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSignIn}>
           <div className="mb-4">
             <label htmlFor="email">Email:</label>
             <input
@@ -103,3 +92,23 @@ function LoginModal() {
 }
 
 export default LoginModal;
+
+
+
+// const handleSubmit = async (e) => {
+//   e.preventDefault();
+
+//   try {
+//     const response = await login(email, password);
+
+//     if (response.success) {
+//       console.log("Login successful!");
+//       closeModal();
+//     } else {
+//       setError("Invalid email or password");
+//     }
+//   } catch (error) {
+//     console.error("Error:", error);
+//     setError("An error occurred. Please try again later.");
+//   }
+// };
