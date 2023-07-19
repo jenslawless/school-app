@@ -10,7 +10,7 @@ function NavBar() {
   return (
     <div className="flex flex-col fixed left-0 items-center w-20 pt-8 h-screen text-gray-700 bg-zinc-600 m-0">
       <a
-        className="flex items-center justify-center w-12 h-12 m-2 bg-neutral-300 hover:bg-white"
+        className="flex items-center justify-center w-12 h-12 m-2 bg-neutral-300 hover:bg-white cursor-pointer"
         // href="/account/settings"
         onClick={handleAccountClick}
       >

@@ -5,7 +5,6 @@ import Menu from "../components/Menu";
 function Courses() {
   return (
     <>
-      <Menu />
       <CoursesHero />
     </>
   );
