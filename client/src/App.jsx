@@ -11,9 +11,25 @@ import ErrorPage from "./pages/ErrorPage";
 import RightBar from "./components/RightBar";
 import Course from "./pages/Course";
 import LoginPage from "./pages/LoginPage";
+import { useEffect } from "react";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState("")
+
+
+
+  useEffect(() => {
+    fetch('/api/check_session')
+      .then((r) => {
+        if (r.ok) {
+          r.json()
+            .then((currentUser) => {
+              setCurrentUser(currentUser)
+            })
+        }
+      })
+  }, []);
 
   // You can use a ternary operator to conditionally render content
   return isLoggedIn ? (
@@ -34,7 +50,7 @@ function App() {
       </Routes>
     </Router>
   ) : (
-    <LoginPage />
+    <LoginPage setIsLoggedIn={setIsLoggedIn} />
   );
 }
 

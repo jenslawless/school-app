@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios"; // Import axios for making API calls
-import { useLocation } from 'react-router-dom';
+
+import { useNavigate } from 'react-router-dom'
 
 
 
-function LoginModal() {
+function LoginModal({ setIsLoggedIn }) {
   // State and event listeners...
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,6 +13,8 @@ function LoginModal() {
   const [showLoginModal, setShowLoginModal] = useState(true);
   const [user, setUser] = useState(null)
 
+
+  console.log(setIsLoggedIn)
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Escape") {
@@ -33,9 +36,17 @@ function LoginModal() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: email, password: password })
     })
-      .then((r) => r.json())
-      .then(data => setUser(data))
-    closeModal()
+      .then((r) => {
+        if (r.ok) {
+          setIsLoggedIn(true);
+        } else {
+          setError("Invalid email or password");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        setError("An error occurred. Please try again later.");
+      })
   }
 
 
@@ -94,21 +105,3 @@ function LoginModal() {
 export default LoginModal;
 
 
-
-// const handleSubmit = async (e) => {
-//   e.preventDefault();
-
-//   try {
-//     const response = await login(email, password);
-
-//     if (response.success) {
-//       console.log("Login successful!");
-//       closeModal();
-//     } else {
-//       setError("Invalid email or password");
-//     }
-//   } catch (error) {
-//     console.error("Error:", error);
-//     setError("An error occurred. Please try again later.");
-//   }
-// };
