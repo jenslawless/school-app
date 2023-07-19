@@ -10,6 +10,7 @@ import CalendarPage from "./pages/CalendarPage";
 import AccountSettings from "./pages/AccountSettings";
 import ErrorPage from "./pages/ErrorPage";
 import RightBar from "./components/RightBar";
+import Course from "./pages/Course";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       </nav>
       <Routes>
         <Route exact path="/" element={<Courses />} />
+        <Route path="/course/:id" element={<Course />} />
         <Route path="/calendar" element={<CalendarPage />} />
         <Route path="/tasks" element={<Tasks />} />
         <Route path="/messages" element={<Messages />} />
