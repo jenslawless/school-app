@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import * as ReactDOM from "react-dom/client";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Tasks from "./pages/Tasks";
@@ -11,9 +10,13 @@ import AccountSettings from "./pages/AccountSettings";
 import ErrorPage from "./pages/ErrorPage";
 import RightBar from "./components/RightBar";
 import Course from "./pages/Course";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
-  return (
+  const [isLoggedIn, setIsLoggedIn] = useState();
+
+  // You can use a ternary operator to conditionally render content
+  return isLoggedIn ? (
     <Router>
       <nav>
         <NavBar />
@@ -30,6 +33,8 @@ function App() {
         <Route path="/*" element={<ErrorPage />} />
       </Routes>
     </Router>
+  ) : (
+    <LoginPage />
   );
 }
 
