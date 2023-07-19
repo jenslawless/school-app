@@ -25,7 +25,7 @@ def seed_users():
         user = User(
             name=fake.name(),
             email=fake.email(),
-            password=fake.password(),
+            password_hash="123",
             role=role
         )
         users.append(user)

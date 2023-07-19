@@ -1,4 +1,4 @@
-from flask import Flask, request, make_response, render_template, redirect, flash
+from flask import Flask, request, make_response, render_template, redirect, flash, session
 from flask_migrate import Migrate
 from models import *
 import os
@@ -7,10 +7,7 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
-
-
-# from config import app, db, api
-
+from config import app, db, api
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 DATABASE = os.environ.get(
@@ -20,7 +17,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
-
+app.secret_key = b'<T#A!\x9a\xc0\x11\x1fb\xb18\xd5\x07\xf9%'
 migrate = Migrate(app, db)
 
 db.init_app(app)
@@ -32,46 +29,49 @@ login_manager.login_view = 'login'  # Replace 'login' with the endpoint of your 
 api = Api(app)
 CORS(app)
 
+class Login(Resource):
 
-@app.route('/')
-def index():
-    return '<h1>Phase 4 Project</h1>'
+    def post(self):
+        email = request.get_json()['email']
+        password = request.get_json()['password']
 
-@app.route('/api/login', methods=['POST'])
-def login():
-    data = request.get_json()
-    email = data.get('email')
-    password = data.get('password')
+        user = User.query.filter(User.email == email).first()
 
-    # Query the user by email
-    user = User.query.filter_by(email=email).first()
+        if user.authenticate(password):
+            session['user_id'] = user.id
+            return user.to_dict(), 200
+        return {}, 401
 
-    if user and check_password_hash(user.password, password):
-        # Password matches, login successful
-        # You can generate a JWT here and send it as part of the response
-        # For simplicity, let's just return a success message for now
-        return jsonify({"success": True, "message": "Login successful"})
-    else:
-        return jsonify({"success": False, "message": "Invalid email or password"}), 401
+class Logout(Resource):
+    def delete(self):
+        session['user_id'] = None
+        return {}, 204
 
-@app.route('/logout')
-@login_required
-def logout():
-    logout_user()
-    return redirect('/login')
+class CheckSession(Resource):
+    def get(self):
+        user_id = session.get('user_id')
+        if user_id:
+            user = User.query.filter(User.id == user_id).first()
+            return user.to_dict()
+        else:
+            return {}, 401
 
-@app.route('/dashboard')
-@login_required
-def dashboard():
-    if current_user.role == 'teacher':
-        # Show teacher dashboard
-        return render_template('teacher_dashboard.html')
-    elif current_user.role == 'student':
-        # Show student dashboard
-        return render_template('student_dashboard.html')
-    else:
-        # Handle other roles or cases if needed
-        return "Unauthorized"
+# # @app.route('/')
+# # def index():
+# #     return '<h1>Phase 4 Project</h1>'
+
+# @app.route('/dashboard')
+# @login_required
+# def dashboard():
+#     if current_user.role == 'teacher':
+#         # Show teacher dashboard
+#         return render_template('teacher_dashboard.html')
+#     elif current_user.role == 'student':
+#         # Show student dashboard
+#         return render_template('student_dashboard.html')
+#     else:
+#         # Handle other roles or cases if needed
+#         return "Unauthorized"
 
 
 class Courses(Resource):
@@ -115,6 +115,11 @@ api.add_resource(Courses, '/courses')
 api.add_resource(Students, '/students')
 api.add_resource(Assignments, '/assignments')
 api.add_resource(IndividualCourse, '/courses/<int:id>')
+
+api.add_resource(Login, '/login')
+api.add_resource(Logout, '/logout')
+api.add_resource(CheckSession, '/check_session')
+
 
 
 

@@ -1,8 +1,8 @@
-"""create tables
+"""password hash3
 
-Revision ID: a48042152811
+Revision ID: 0e2dadd26493
 Revises: 
-Create Date: 2023-07-18 14:17:14.692941
+Create Date: 2023-07-19 11:34:59.560587
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'a48042152811'
+revision = '0e2dadd26493'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,9 +22,9 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(), nullable=True),
     sa.Column('email', sa.String(), nullable=True),
-    sa.Column('password', sa.String(), nullable=True),
+    sa.Column('_password_hash', sa.String(), nullable=True),
     sa.Column('role', sa.String(), nullable=True),
-    sa.PrimaryKeyConstraint('id', name=op.f('pk_users'))
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('courses',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -32,14 +32,14 @@ def upgrade():
     sa.Column('description', sa.String(), nullable=True),
     sa.Column('teacher_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['teacher_id'], ['users.id'], name=op.f('fk_courses_teacher_id_users')),
-    sa.PrimaryKeyConstraint('id', name=op.f('pk_courses'))
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('assignments',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('description', sa.String(), nullable=True),
     sa.Column('course_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['course_id'], ['courses.id'], name=op.f('fk_assignments_course_id_courses')),
-    sa.PrimaryKeyConstraint('id', name=op.f('pk_assignments'))
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('enrollments',
     sa.Column('student_id', sa.Integer(), nullable=True),
@@ -54,7 +54,7 @@ def upgrade():
     sa.Column('value', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['assignment_id'], ['assignments.id'], name=op.f('fk_grades_assignment_id_assignments')),
     sa.ForeignKeyConstraint(['student_id'], ['users.id'], name=op.f('fk_grades_student_id_users')),
-    sa.PrimaryKeyConstraint('id', name=op.f('pk_grades'))
+    sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
 

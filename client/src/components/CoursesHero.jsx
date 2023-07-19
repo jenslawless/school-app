@@ -12,18 +12,10 @@ function CoursesHero() {
 
     fetchCourses().catch(console.error);
   }, []);
-  // console.log(courses);
+  console.log(courses);
 
   return (
     <>
-<<<<<<< HEAD
-      <div class="grid grid-cols-2">
-        <div class="grid grid-cols-2">
-          {courses.map((course) => (
-            <div key={course.id} className="pl-24 pt-8">
-              <h1>{course.name}</h1>
-              <h2>{course.description}</h2>
-=======
       <div className="grid grid-cols-2">
         <div className="grid grid-cols-2">
           {courses.map((course) => (
