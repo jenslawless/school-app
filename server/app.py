@@ -76,7 +76,7 @@ class IndividualCourse(Resource):
 
 class Students(Resource):
     def get(self):
-        students = User.query.filter(User.role == 'student').all()
+        students = User.query.filter(User.role == 'Student').all()
         students_serialized = []
         for stu in students:
             students_serialized.append(stu.to_dict())
@@ -91,6 +91,17 @@ class Assignments(Resource):
         for ass in assignments:
             assignments_serialized.append(ass.to_dict())
         return make_response(assignments_serialized, 200)
+    
+class IndStudent(Resource):
+    def get(self, id):
+        student = User.query.filter(id==id).first()
+        if student:
+            return make_response(student.to_dict(),200)
+        else:
+            return make_response({"error": "Student not found."})
+
+
+
 
 
 api.add_resource(Courses, '/courses')
@@ -101,6 +112,7 @@ api.add_resource(IndividualCourse, '/courses/<int:id>')
 api.add_resource(Login, '/login')
 api.add_resource(Logout, '/logout')
 api.add_resource(CheckSession, '/check_session')
+api.add_resource(IndStudent, '/students/<int:id>')
 
 
 

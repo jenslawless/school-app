@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 function Assignments({ setCurrentName, currentUser }) {
   const [assignments, setAssignments] = useState([]);
-  const [currentCourse, setCurrentCourse] = useState([])
+  const [currentCourse, setCurrentCourse] = useState([]);
   const { id } = useParams();
+  const navigate = useNavigate();
 
   //   console.log(id);
 
@@ -13,7 +14,7 @@ function Assignments({ setCurrentName, currentUser }) {
       try {
         const res = await fetch(`/api/courses/${id}`);
         const myAssignments = await res.json();
-        setCurrentCourse(myAssignments)
+        setCurrentCourse(myAssignments);
         setAssignments(myAssignments.assignments); // Update the assignments state with fetched data
         setCurrentName(myAssignments.name);
       } catch (error) {
@@ -29,6 +30,20 @@ function Assignments({ setCurrentName, currentUser }) {
 
   // // console.log(currentUser);
   // console.log(currentCourse)
+
+  function getIndStudent(id) {
+    const fetchIndStudent = async (id) => {
+      try {
+        const res = await fetch(`/api/students/${id}`);
+        const myIndStudent = await res.json();
+
+        navigate(`/students/${id}`);
+      } catch (error) {
+        console.error("Error fetching individual student:", error);
+      }
+    };
+    fetchIndStudent(id);
+  }
 
   return (
     <>
@@ -58,14 +73,16 @@ function Assignments({ setCurrentName, currentUser }) {
           ) : (
             <>
               <h1>Students:</h1>
-              {
-                currentCourse.students?.map((stu) => (
-                  <div className="space-x-1" key={stu.id}>
+              {currentCourse.students?.map((stu) => (
+                <div className="space-x-1" key={stu.id}>
+                  <div
+                    className="cursor-pointer"
+                    onClick={() => getIndStudent(stu.id)}
+                  >
                     {stu.name}
                   </div>
-                )
-                )
-              }
+                </div>
+              ))}
             </>
           )}
         </div>

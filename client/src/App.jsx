@@ -12,6 +12,7 @@ import RightBar from "./components/RightBar";
 import Course from "./pages/Course";
 import LoginPage from "./pages/LoginPage";
 import { useEffect } from "react";
+import StudentPage from "./pages/StudentPage";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -61,6 +62,7 @@ function App() {
         />
         <Route path="help" element={<Help currentUser={currentUser} />} />
         <Route path="*" element={<ErrorPage currentUser={currentUser} />} />
+        <Route path="students/:id" element={<StudentPage />} />
       </Routes>
     </BrowserRouter>
   ) : (
