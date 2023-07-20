@@ -39,13 +39,16 @@ function Assignments({ setCurrentName, currentUser }) {
               );
 
               return (
-                <div key={index}>
-                  <div>
-                    <p className="border-2 border-black">
-                      {assignment.description}
-                      Grade: {grade ? grade.value : "Not graded"}{" "}
+                <div className="space-x-1" key={index}>
+                  <div className="grid grid-cols-2 ">
+                    <p className="border-2 border-black bg-cyan-800 text-white font-bold">
+                      Assignment:{" "}
+                      <p className="font-normal">{assignment.description}</p>
+                    </p>
+                    <p className="border-2 border-black bg-neutral-300 w-16">
+                      Grade: {grade ? grade.value : "Not graded"}%
                       {/* Display the grade value if it exists, otherwise show "Not graded" */}
-                    </p>{" "}
+                    </p>
                   </div>
                 </div>
               );

@@ -16,7 +16,7 @@ import { useEffect } from "react";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState("");
-
+  console.log(currentUser);
   useEffect(() => {
     fetch("/api/check_session").then((r) => {
       if (r.ok) {
@@ -32,7 +32,11 @@ function App() {
   return isLoggedIn ? (
     <BrowserRouter>
       <nav>
-        <NavBar currentUser={currentUser} setIsLoggedIn={setIsLoggedIn} />
+        <NavBar
+          currentUser={currentUser}
+          setIsLoggedIn={setIsLoggedIn}
+          setCurrentUser={setCurrentUser}
+        />
         <RightBar currentUser={currentUser} />
       </nav>
       <Routes>
@@ -62,7 +66,7 @@ function App() {
       </Routes>
     </BrowserRouter>
   ) : (
-    <LoginPage setIsLoggedIn={setIsLoggedIn} />
+    <LoginPage setIsLoggedIn={setIsLoggedIn} setCurrentUser={setCurrentUser} />
   );
 }
 

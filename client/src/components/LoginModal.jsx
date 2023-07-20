@@ -3,7 +3,7 @@ import axios from "axios"; // Import axios for making API calls
 
 import { useNavigate } from "react-router-dom";
 
-function LoginModal({ setIsLoggedIn }) {
+function LoginModal({ setIsLoggedIn, setCurrentUser }) {
   // State and event listeners...
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -34,7 +34,10 @@ function LoginModal({ setIsLoggedIn }) {
     })
       .then((r) => {
         if (r.ok) {
-          setIsLoggedIn(true);
+          r.json().then((data) => {
+            setCurrentUser(data);
+            setIsLoggedIn(true);
+          });
         } else {
           setError("Invalid email or password");
         }

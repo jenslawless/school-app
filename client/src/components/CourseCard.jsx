@@ -47,10 +47,10 @@ function CourseCard({ currentUser, setCurrentName }) {
                   className="pl-24 pt-8 cursor-pointer"
                 >
                   <div className="w-auto">
-                    <p className="border-2 border-black bg-gray-500">
+                    <p className="border-2 border-black bg-cyan-800 text-white font-bold">
                       {course.name}
                     </p>
-                    <p className="border-2 border-black bg-neutral-300">
+                    <p className="border-2 border-black bg-neutral-300 italic">
                       Professor: {course.teacher.name}
                     </p>
                     <p className="border-2 border-black bg-neutral-300">

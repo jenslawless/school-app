@@ -3,7 +3,7 @@ import LoginModal from "./LoginModal";
 import { useNavigate } from "react-router-dom";
 import LeftTray from "./LeftTray";
 
-function NavBar({ currentUser, setIsLoggedIn }) {
+function NavBar({ currentUser, setIsLoggedIn, setCurrentUser }) {
   const navigate = useNavigate();
   const [isLeftTrayVisible, setIsLeftTrayVisible] = useState(false);
 
@@ -37,7 +37,11 @@ function NavBar({ currentUser, setIsLoggedIn }) {
         <p className="items-center text-s text-gray-300">Account</p>
       </div>
       {isLeftTrayVisible && (
-        <LeftTray currentUser={currentUser} setIsLoggedIn={setIsLoggedIn} />
+        <LeftTray
+          currentUser={currentUser}
+          setIsLoggedIn={setIsLoggedIn}
+          setCurrentUser={setCurrentUser}
+        />
       )}
 
       {/* Render the LoginModal conditionally */}
