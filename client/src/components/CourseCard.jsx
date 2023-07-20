@@ -26,7 +26,7 @@ function CourseCard({ currentUser }) {
         const myIndCourses = await res.json();
         console.log(myIndCourses);
         // Now navigate to the individual course page
-        navigate(`/course/${id}`);
+        navigate(`/courses/${id}`);
       } catch (error) {
         console.error("Error fetching individual course:", error);
       }
@@ -34,33 +34,57 @@ function CourseCard({ currentUser }) {
     fetchIndCourses(id);
   }
 
+
   return (
     <>
-      <div className="grid grid-cols-2 ">
+      <div className="grid grid-cols-2">
         <div className="grid grid-cols-2">
-          {courses.map((course) => (
-            <div
-              key={course.id}
-              onClick={() => getIndCourses(course.id)}
-              className="pl-24 pt-8 cursor-pointer"
-            >
-              <div className="w-auto">
-                <p className="border-2 border-black bg-gray-500">
-                  {course.name}
-                </p>
-                <p className="border-2 border-black bg-neutral-300">
-                  Professor: {course.teacher.name}
-                </p>
-                <p className="border-2 border-black bg-neutral-300">
-                  Course Description: {course.description}
-                </p>
+          {currentUser.role === "Student" ? (
+            // Content for student
+            currentUser.course_list.map((course) => (
+              <div
+                key={course.id}
+                onClick={() => getIndCourses(course.id)}
+                className="pl-24 pt-8 cursor-pointer"
+              >
+                <div className="w-auto">
+                  <p className="border-2 border-black bg-gray-500">
+                    {course.name}
+                  </p>
+                  <p className="border-2 border-black bg-neutral-300">
+                    Professor: {course.teacher.name}
+                  </p>
+                  <p className="border-2 border-black bg-neutral-300">
+                    Course Description: {course.description}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            // Content for teacher
+            currentUser.courses.map((course) => (
+              <div
+                key={course.id}
+                onClick={() => getIndCourses(course.id)}
+                className="pl-24 pt-8 cursor-pointer"
+              >
+                <div className="w-auto">
+                  <p className="border-2 border-black bg-gray-500">
+                    {course.name}
+                  </p>
+                  <p className="border-2 border-black bg-neutral-300">
+                    Course Description: {course.description}
+                  </p>
+                </div>
+              </div>
+            ))
+
+          )}
         </div>
       </div>
     </>
   );
+
 }
 
 export default CourseCard;

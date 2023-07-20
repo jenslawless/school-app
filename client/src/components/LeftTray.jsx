@@ -8,7 +8,8 @@ function LeftTray({ currentUser, setIsLoggedIn, setCurrentUser }) {
     }).then((r) => {
       if (r.ok) {
         setIsLoggedIn(false);
-        // setCurrentUser(false);
+        // window.location.reload();
+        // setCurrentUser(null);
       }
     });
   }
@@ -34,6 +35,7 @@ function LeftTray({ currentUser, setIsLoggedIn, setCurrentUser }) {
         </a>
       </div>
       <div className="text-xl border-b-2 border-black">{currentUser.name}</div>
+      <div className="text-xl border-b-2 border-black">{currentUser.role}</div>
       <div
         onClick={handleLogOut}
         className="border-black rounded border-2 mt-4"

@@ -43,7 +43,7 @@ function App() {
           element={<Courses currentUser={currentUser} />}
         />
         <Route
-          path="course/:id"
+          path="courses/:id"
           element={<Course currentUser={currentUser} />}
         />
         <Route

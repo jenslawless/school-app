@@ -2,11 +2,11 @@ import React from "react";
 import Assignments from "../components/Assignments";
 import Menu from "../components/Menu";
 
-function Course() {
+function Course({ currentUser }) {
   return (
     <div>
       <Menu />
-      <Assignments />
+      <Assignments currentUser={currentUser} />
     </div>
   );
 }
