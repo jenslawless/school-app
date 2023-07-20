@@ -10,12 +10,7 @@ function LeftTray({ currentUser, setIsLoggedIn, setCurrentUser }) {
     }).then((r) => {
       if (r.ok) {
         setIsLoggedIn(false);
-<<<<<<< HEAD
         setCurrentUser(null);
-=======
-        // window.location.reload();
-        // setCurrentUser(null);
->>>>>>> main
       }
     });
   }
@@ -41,12 +36,8 @@ function LeftTray({ currentUser, setIsLoggedIn, setCurrentUser }) {
         </a>
       </div>
       <div className="text-xl border-b-2 border-black">{currentUser.name}</div>
-<<<<<<< HEAD
       <div className="text-xl ">{currentUser.role}</div>
 
-=======
-      <div className="text-xl border-b-2 border-black">{currentUser.role}</div>
->>>>>>> main
       <div
         className="cursor-pointer"
         onClick={() => navigate("/account/settings")}

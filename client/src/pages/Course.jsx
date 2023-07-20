@@ -7,7 +7,7 @@ function Course({ currentUser }) {
   return (
     <div>
       <Menu currentUser={currentUser} currentName={currentName} />
-      <Assignments setCurrentName={setCurrentName} />
+      <Assignments setCurrentName={setCurrentName} currentUser={currentUser} />
     </div>
   );
 }

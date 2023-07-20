@@ -1,8 +1,8 @@
-"""updating enrollments table
+"""create tables
 
-Revision ID: 85ed401c21e7
+Revision ID: 1cc82a2a3261
 Revises: 
-Create Date: 2023-07-20 10:05:32.829881
+Create Date: 2023-07-20 14:15:41.626775
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '85ed401c21e7'
+revision = '1cc82a2a3261'
 down_revision = None
 branch_labels = None
 depends_on = None

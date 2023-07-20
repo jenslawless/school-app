@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-function Assignments({ setCurrentName }{ currentUser }) {
+function Assignments({ setCurrentName, currentUser }) {
   const [assignments, setAssignments] = useState([]);
   const { id } = useParams();
 
@@ -25,7 +25,7 @@ function Assignments({ setCurrentName }{ currentUser }) {
     getAssignments(); // Call getAssignments when the component mounts
   }, []);
 
-  console.log(currentUser)
+  console.log(currentUser);
 
   return (
     <>
@@ -43,7 +43,8 @@ function Assignments({ setCurrentName }{ currentUser }) {
                   <div>
                     <p className="border-2 border-black">
                       {assignment.description}
-                      Grade: {grade ? grade.value : "Not graded"} {/* Display the grade value if it exists, otherwise show "Not graded" */}
+                      Grade: {grade ? grade.value : "Not graded"}{" "}
+                      {/* Display the grade value if it exists, otherwise show "Not graded" */}
                     </p>{" "}
                   </div>
                 </div>
@@ -57,6 +58,5 @@ function Assignments({ setCurrentName }{ currentUser }) {
     </>
   );
 }
-
 
 export default Assignments;
