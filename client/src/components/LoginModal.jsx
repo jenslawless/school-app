@@ -13,8 +13,6 @@ function LoginModal({ setIsLoggedIn }) {
   const [showLoginModal, setShowLoginModal] = useState(true);
   const [user, setUser] = useState(null)
 
-
-  console.log(setIsLoggedIn)
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Escape") {

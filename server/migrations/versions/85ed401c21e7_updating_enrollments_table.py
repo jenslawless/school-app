@@ -1,8 +1,8 @@
-"""password hash3
+"""updating enrollments table
 
-Revision ID: 0e2dadd26493
+Revision ID: 85ed401c21e7
 Revises: 
-Create Date: 2023-07-19 11:34:59.560587
+Create Date: 2023-07-20 10:05:32.829881
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '0e2dadd26493'
+revision = '85ed401c21e7'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -42,10 +42,12 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('enrollments',
+    sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('student_id', sa.Integer(), nullable=True),
     sa.Column('course_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['course_id'], ['courses.id'], name=op.f('fk_enrollments_course_id_courses')),
-    sa.ForeignKeyConstraint(['student_id'], ['users.id'], name=op.f('fk_enrollments_student_id_users'))
+    sa.ForeignKeyConstraint(['student_id'], ['users.id'], name=op.f('fk_enrollments_student_id_users')),
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('grades',
     sa.Column('id', sa.Integer(), nullable=False),

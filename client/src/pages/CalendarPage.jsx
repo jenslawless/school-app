@@ -5,7 +5,7 @@ import "react-calendar/dist/Calendar.css";
 function CalendarPage() {
   return (
     <>
-      <div class="pl-24 pt-8">
+      <div className="pl-24 pt-8">
         <Calendar />
       </div>
     </>

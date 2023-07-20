@@ -1,18 +1,14 @@
 import React, { useState } from "react";
-import LoginModal from "./LoginModal";
+import { useNavigate } from "react-router-dom";
 
-function NavBar() {
-  const [showLoginModal, setShowLoginModal] = useState(false);
-
-  const handleAccountClick = () => {
-    setShowLoginModal(true);
-  };
+function NavBar({ currentUser }) {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col fixed left-0 items-center w-20 pt-8 h-screen text-gray-700 bg-zinc-600 m-0">
       <a
         className="flex items-center justify-center w-12 h-12 m-2 bg-neutral-300 hover:bg-white cursor-pointer"
-        // href="/account/settings"
-        onClick={handleAccountClick}
+      // href="/account/settings"
+      // onClick={}
       >
         <svg
           className="w-10 h-10 stroke-current"
@@ -32,12 +28,13 @@ function NavBar() {
       <p className="items-center text-s text-gray-300">Account</p>
 
       {/* Render the LoginModal conditionally */}
-      {showLoginModal && <LoginModal />}
+      {/* {showLoginModal && <LoginModal />} */}
 
       <div className="flex flex-col items-center border-t border-gray-300">
         <a
           className="flex items-center justify-center w-12 h-12 m-2 bg-neutral-300 hover:bg-white"
-          href="/"
+          href="#"
+          onClick={() => navigate("/")}
         >
           <svg
             className="w-10 h-10 stroke-current"
@@ -93,7 +90,8 @@ function NavBar() {
       <div className="flex flex-col items-center border-t border-gray-300">
         <a
           className="flex items-center justify-center w-12 h-12 m-2 bg-neutral-300 hover:bg-white"
-          href="/tasks"
+          href="#"
+          onClick={() => navigate("/tasks")}
         >
           <svg
             className="h-10 w-10 stroke-current"
@@ -137,7 +135,8 @@ function NavBar() {
       <div className="flex flex-col items-center border-t border-gray-300">
         <a
           className="flex items-center justify-center w-12 h-12 m-2 bg-neutral-300 hover:bg-white"
-          href="/calendar"
+          href="#"
+          onClick={() => navigate("/calendar")}
         >
           <svg
             className="w-10 h-10 stroke-current"
@@ -208,7 +207,8 @@ function NavBar() {
       <div className="flex flex-col items-center border-t border-gray-300">
         <a
           className="flex items-center justify-center w-12 h-12 m-2 bg-neutral-300 hover:bg-white"
-          href="/messages"
+          href="#"
+          onClick={() => navigate("/messages")}
         >
           <svg
             className="h-10 w-10 stroke-current"
@@ -242,7 +242,8 @@ function NavBar() {
       <div className="flex flex-col items-center border-t border-gray-300">
         <a
           className="flex items-center justify-center w-12 h-12 m-2 bg-neutral-300 hover:bg-white"
-          href="/help"
+          href="#"
+          onClick={() => navigate("/help")}
         >
           <svg
             className="w-10 h-10"
@@ -267,3 +268,4 @@ function NavBar() {
 }
 
 export default NavBar;
+

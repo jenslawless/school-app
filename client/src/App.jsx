@@ -17,8 +17,6 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState("")
 
-
-
   useEffect(() => {
     fetch('/api/check_session')
       .then((r) => {
@@ -26,20 +24,22 @@ function App() {
           r.json()
             .then((currentUser) => {
               setCurrentUser(currentUser)
+              setIsLoggedIn(true)
             })
         }
       })
   }, []);
+  console.log(currentUser)
 
   // You can use a ternary operator to conditionally render content
   return isLoggedIn ? (
     <Router>
       <nav>
-        <NavBar />
+        <NavBar currentUser={currentUser} />
         <RightBar />
       </nav>
       <Routes>
-        <Route exact path="/" element={<Courses />} />
+        <Route exact path="/" element={<Courses />} currentUser={currentUser} />
         <Route path="/course/:id" element={<Course />} />
         <Route path="/calendar" element={<CalendarPage />} />
         <Route path="/tasks" element={<Tasks />} />
