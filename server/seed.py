@@ -14,7 +14,7 @@ fake = Faker()
 
 def seed_users():
     users = []
-    for _ in range(100):
+    for _ in range(50):
         role_probability = random()
 
         if role_probability <= 0.25:
@@ -36,16 +36,39 @@ def seed_courses(users):
     courses = ["Algebra", "Physics", "English", "US History", "Ceramics", "Chemistry", "Art History"]
     course_list = []
     teacher_ids = [user for user in users if user.role == 'teacher']
+    # this line was added
+    # student_users = [user for user in users if user.role == 'student']
+    
 
     for course in courses:
+        # this line was added
+        # students = sample(student_users, k=randint(1, 5))
         c = Course(
             name=course,
             description=fake.text(),
             teacher_id=rc(teacher_ids).id
         )
+        # this line was added
+        # c.students.extend(students)
         course_list.append(c)
+
     
     return course_list
+
+def seed_enrollments(courses, users):
+    enrollments = []
+    student_users = [user for user in users if user.role == 'student']
+
+    for stu in student_users:
+        num_enrollments = randint(2, 4)
+        enrolled_courses = sample(courses, k=num_enrollments)
+
+        for course in enrolled_courses:
+            enrollment = Enrollment(student_id=stu.id, course_id=course.id)
+            enrollments.append(enrollment)
+    
+    return enrollments
+
 
 def seed_assignments(courses, users):
     assignments = []
@@ -90,7 +113,7 @@ if __name__ == '__main__':
         Assignment.query.delete()
         Grade.query.delete()
         User.query.delete()
-        enrollments.delete()
+        Enrollment.query.delete()
 
         print("Seeding users...")
         users = seed_users()
@@ -100,6 +123,11 @@ if __name__ == '__main__':
         print("Seeding courses...")
         courses = seed_courses(users)
         db.session.add_all(courses)
+        db.session.commit()
+
+        print("Seeding enrollments...")
+        enrollments = seed_enrollments(courses, users)
+        db.session.add_all(enrollments)
         db.session.commit()
 
         print("Seeding assignments...")

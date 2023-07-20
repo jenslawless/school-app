@@ -2,10 +2,10 @@ import React from "react";
 import CoursesHero from "../components/CoursesHero";
 import Menu from "../components/Menu";
 
-function Courses() {
+function Courses({ currentUser }) {
   return (
     <>
-      <CoursesHero />
+      <CoursesHero currentUser={currentUser} />
     </>
   );
 }

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import LeftTray from "./LeftTray";
+import LoginModal from "./LoginModal";
 
 function NavBar({ currentUser, setIsLoggedIn }) {
   const navigate = useNavigate();
@@ -41,6 +40,7 @@ function NavBar({ currentUser, setIsLoggedIn }) {
       )}
 
       {/* Render the LoginModal conditionally */}
+      {/* {showLoginModal && <LoginModal />} */}
       {/* {showLoginModal && <LoginModal />} */}
 
       <div className="flex flex-col items-center border-t border-gray-300">
@@ -105,6 +105,8 @@ function NavBar({ currentUser, setIsLoggedIn }) {
           className="flex items-center justify-center w-12 h-12 m-2 bg-neutral-300 hover:bg-white"
           href="#"
           onClick={() => navigate("/tasks")}
+          href="#"
+          onClick={() => navigate("/tasks")}
         >
           <svg
             className="h-10 w-10 stroke-current"
@@ -148,6 +150,8 @@ function NavBar({ currentUser, setIsLoggedIn }) {
       <div className="flex flex-col items-center border-t border-gray-300">
         <a
           className="flex items-center justify-center w-12 h-12 m-2 bg-neutral-300 hover:bg-white"
+          href="#"
+          onClick={() => navigate("/calendar")}
           href="#"
           onClick={() => navigate("/calendar")}
         >
@@ -222,6 +226,8 @@ function NavBar({ currentUser, setIsLoggedIn }) {
           className="flex items-center justify-center w-12 h-12 m-2 bg-neutral-300 hover:bg-white"
           href="#"
           onClick={() => navigate("/messages")}
+          href="#"
+          onClick={() => navigate("/messages")}
         >
           <svg
             className="h-10 w-10 stroke-current"
@@ -257,6 +263,8 @@ function NavBar({ currentUser, setIsLoggedIn }) {
           className="flex items-center justify-center w-12 h-12 m-2 bg-neutral-300 hover:bg-white"
           href="#"
           onClick={() => navigate("/help")}
+          href="#"
+          onClick={() => navigate("/help")}
         >
           <svg
             className="w-10 h-10"
@@ -281,3 +289,4 @@ function NavBar({ currentUser, setIsLoggedIn }) {
 }
 
 export default NavBar;
+

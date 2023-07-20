@@ -57,10 +57,6 @@ class User(db.Model, SerializerMixin):
         if len(email) > 40:
                 raise ValueError("Invalid email address. Email must be a maximum of 40 characters long.")
         return email
-    
-    # def __init__(self, password, **kwargs):
-    #     self.password = password
-    #     super().__init__(**kwargs)
 
 class Assignment(db.Model, SerializerMixin):
     __tablename__ = "assignments"
@@ -95,10 +91,20 @@ class Grade(db.Model, SerializerMixin):
 
     student = db.relationship('User', backref='grades')
 
-enrollments = db.Table('enrollments',
-    db.Column('student_id', db.Integer, db.ForeignKey('users.id')),
-    db.Column('course_id', db.Integer, db.ForeignKey('courses.id'))
-)
+# enrollments = db.Table('enrollments',
+#     db.Column('student_id', db.Integer, db.ForeignKey('users.id')),
+#     db.Column('course_id', db.Integer, db.ForeignKey('courses.id'))
+# )
+
+class Enrollment(db.Model):
+    __tablename__ = "enrollments"
+
+    id = db.Column(db.Integer, primary_key=True)
+    student_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
+
+    student = db.relationship('User', backref='enrollments')
+    course = db.relationship('Course', backref='enrollments')
     
 
 

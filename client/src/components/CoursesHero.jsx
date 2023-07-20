@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import CourseCard from "./CourseCard";
 import Menu from "./Menu";
 
-function CoursesHero() {
+function CoursesHero({ currentUser }) {
   return (
     <div>
       <Menu />
-      <CourseCard />
+      <CourseCard currentUser={currentUser} />
     </div>
   );
 }
