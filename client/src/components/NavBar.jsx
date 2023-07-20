@@ -1,43 +1,53 @@
 import React, { useState } from "react";
-import LoginModal from "./LoginModal";
+import { useNavigate } from "react-router-dom";
+import LeftTray from "./LeftTray";
 
-function NavBar() {
-  const [showLoginModal, setShowLoginModal] = useState(false);
+function NavBar({ currentUser, setIsLoggedIn }) {
+  const navigate = useNavigate();
+  const [isLeftTrayVisible, setIsLeftTrayVisible] = useState(false);
 
-  const handleAccountClick = () => {
-    setShowLoginModal(true);
+  const handleLeftTrayClick = () => {
+    setIsLeftTrayVisible(!isLeftTrayVisible);
   };
+  console.log(currentUser);
   return (
     <div className="flex flex-col fixed left-0 items-center w-20 pt-8 h-screen text-gray-700 bg-zinc-600 m-0">
-      <a
-        className="flex items-center justify-center w-12 h-12 m-2 bg-neutral-300 hover:bg-white cursor-pointer"
-        // href="/account/settings"
-        onClick={handleAccountClick}
-      >
-        <svg
-          className="w-10 h-10 stroke-current"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
+      <div>
+        <a
+          className="flex items-center justify-center w-12 h-12 m-2 bg-neutral-300 hover:bg-white cursor-pointer"
+          // href="/account/settings"
+          onClick={handleLeftTrayClick}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-      </a>
-      <p className="items-center text-s text-gray-300">Account</p>
+          <svg
+            className="w-10 h-10 stroke-current"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+        </a>
+
+        <p className="items-center text-s text-gray-300">Account</p>
+      </div>
+      {isLeftTrayVisible && (
+        <LeftTray currentUser={currentUser} setIsLoggedIn={setIsLoggedIn} />
+      )}
 
       {/* Render the LoginModal conditionally */}
-      {showLoginModal && <LoginModal />}
+      {/* {showLoginModal && <LoginModal />} */}
 
       <div className="flex flex-col items-center border-t border-gray-300">
         <a
           className="flex items-center justify-center w-12 h-12 m-2 bg-neutral-300 hover:bg-white"
-          href="/"
+          href="#"
+          onClick={() => navigate("/courses")}
         >
           <svg
             className="w-10 h-10 stroke-current"
@@ -93,7 +103,8 @@ function NavBar() {
       <div className="flex flex-col items-center border-t border-gray-300">
         <a
           className="flex items-center justify-center w-12 h-12 m-2 bg-neutral-300 hover:bg-white"
-          href="/tasks"
+          href="#"
+          onClick={() => navigate("/tasks")}
         >
           <svg
             className="h-10 w-10 stroke-current"
@@ -137,7 +148,8 @@ function NavBar() {
       <div className="flex flex-col items-center border-t border-gray-300">
         <a
           className="flex items-center justify-center w-12 h-12 m-2 bg-neutral-300 hover:bg-white"
-          href="/calendar"
+          href="#"
+          onClick={() => navigate("/calendar")}
         >
           <svg
             className="w-10 h-10 stroke-current"
@@ -208,7 +220,8 @@ function NavBar() {
       <div className="flex flex-col items-center border-t border-gray-300">
         <a
           className="flex items-center justify-center w-12 h-12 m-2 bg-neutral-300 hover:bg-white"
-          href="/messages"
+          href="#"
+          onClick={() => navigate("/messages")}
         >
           <svg
             className="h-10 w-10 stroke-current"
@@ -242,7 +255,8 @@ function NavBar() {
       <div className="flex flex-col items-center border-t border-gray-300">
         <a
           className="flex items-center justify-center w-12 h-12 m-2 bg-neutral-300 hover:bg-white"
-          href="/help"
+          href="#"
+          onClick={() => navigate("/help")}
         >
           <svg
             className="w-10 h-10"

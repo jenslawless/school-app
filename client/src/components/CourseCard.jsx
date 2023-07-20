@@ -51,6 +51,9 @@ function CourseCard() {
                 <p className="border-2 border-black bg-neutral-300">
                   Professor: {course.teacher.name}
                 </p>
+                <p className="border-2 border-black bg-neutral-300">
+                  Course Description: {course.description}
+                </p>
               </div>
             </div>
           ))}

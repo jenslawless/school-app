@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Tasks from "./pages/Tasks";
 import Messages from "./pages/Messages";
@@ -15,40 +15,51 @@ import { useEffect } from "react";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState("")
-
-
-
+  const [currentUser, setCurrentUser] = useState("");
+  console.log(isLoggedIn);
   useEffect(() => {
-    fetch('/api/check_session')
-      .then((r) => {
-        if (r.ok) {
-          r.json()
-            .then((currentUser) => {
-              setCurrentUser(currentUser)
-            })
-        }
-      })
+    fetch("/api/check_session").then((r) => {
+      if (r.ok) {
+        r.json().then((currentUser) => {
+          setCurrentUser(currentUser);
+          setIsLoggedIn(true);
+        });
+      }
+    });
   }, []);
 
-  // You can use a ternary operator to conditionally render content
   return isLoggedIn ? (
-    <Router>
+    <BrowserRouter>
       <nav>
-        <NavBar />
-        <RightBar />
+        <NavBar currentUser={currentUser} setIsLoggedIn={setIsLoggedIn} />
+        <RightBar currentUser={currentUser} setIsLoggedIn={setIsLoggedIn} />
       </nav>
       <Routes>
-        <Route exact path="/" element={<Courses />} />
-        <Route path="/course/:id" element={<Course />} />
-        <Route path="/calendar" element={<CalendarPage />} />
-        <Route path="/tasks" element={<Tasks />} />
-        <Route path="/messages" element={<Messages />} />
-        <Route path="/account/settings" element={<AccountSettings />} />
-        <Route path="/help" element={<Help />} />
-        <Route path="/*" element={<ErrorPage />} />
+        <Route
+          path="/courses"
+          element={<Courses currentUser={currentUser} />}
+        />
+        <Route
+          path="course/:id"
+          element={<Course currentUser={currentUser} />}
+        />
+        <Route
+          path="calendar"
+          element={<CalendarPage currentUser={currentUser} />}
+        />
+        <Route path="tasks" element={<Tasks currentUser={currentUser} />} />
+        <Route
+          path="messages"
+          element={<Messages currentUser={currentUser} />}
+        />
+        <Route
+          path="account/settings"
+          element={<AccountSettings currentUser={currentUser} />}
+        />
+        <Route path="help" element={<Help currentUser={currentUser} />} />
+        <Route path="*" element={<ErrorPage currentUser={currentUser} />} />
       </Routes>
-    </Router>
+    </BrowserRouter>
   ) : (
     <LoginPage setIsLoggedIn={setIsLoggedIn} />
   );
