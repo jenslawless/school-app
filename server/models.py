@@ -31,8 +31,7 @@ class User(db.Model, SerializerMixin):
 
     course_list = db.relationship('Course', secondary='enrollments', backref='students')
 
-    serialize_rules = ("-courses.students",)
-
+    serialize_rules = ('-courses.teacher',"-courses.enrollments","-course_list.enrollments", "-enrollments")
     @hybrid_property
     def password_hash(self):
         return self._password_hash
@@ -66,6 +65,7 @@ class Assignment(db.Model, SerializerMixin):
     course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
 
     grades = db.relationship('Grade', backref='assignment')
+    serialize_rules = ("-course.students", "-grades.student","-course.assignments","-grades.assignment",)
 
 
 class Course(db.Model, SerializerMixin):
@@ -79,7 +79,7 @@ class Course(db.Model, SerializerMixin):
     teacher = db.relationship('User', backref='courses')
     assignments = db.relationship('Assignment', backref='course')
 
-    serialize_rules = ("-students.course_list", "-teacher.courses", "-assignments.course",)
+    serialize_rules = ("-students.course_list", "-students.enrollments", "-students.grades", "-teacher.courses", "-enrollments.course", "-assignments.course",)
 
 class Grade(db.Model, SerializerMixin):
     __tablename__ = "grades"
@@ -90,11 +90,8 @@ class Grade(db.Model, SerializerMixin):
     value = db.Column(db.Integer)
 
     student = db.relationship('User', backref='grades')
+    serialize_rules = ("-assignment.course.students", "-student", "-assignment.grades")
 
-# enrollments = db.Table('enrollments',
-#     db.Column('student_id', db.Integer, db.ForeignKey('users.id')),
-#     db.Column('course_id', db.Integer, db.ForeignKey('courses.id'))
-# )
 
 class Enrollment(db.Model):
     __tablename__ = "enrollments"
@@ -105,6 +102,8 @@ class Enrollment(db.Model):
 
     student = db.relationship('User', backref='enrollments')
     course = db.relationship('Course', backref='enrollments')
+
+    serialize_rules = ("-student.enrollments", "course.enrollments",)
     
 
 
