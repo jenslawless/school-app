@@ -6,7 +6,11 @@ function Course({ currentUser }) {
   const [currentName, setCurrentName] = useState("");
   return (
     <div>
-      <Menu currentUser={currentUser} currentName={currentName} />
+      <Menu
+        currentUser={currentUser}
+        currentName={currentName}
+        toNavigate={"/courses"}
+      />
       <Assignments setCurrentName={setCurrentName} currentUser={currentUser} />
     </div>
   );

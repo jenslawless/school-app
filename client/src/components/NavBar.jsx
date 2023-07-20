@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import LoginModal from "./LoginModal";
 import { useNavigate } from "react-router-dom";
 import LeftTray from "./LeftTray";
 
@@ -41,6 +40,7 @@ function NavBar({ currentUser, setIsLoggedIn, setCurrentUser }) {
           currentUser={currentUser}
           setIsLoggedIn={setIsLoggedIn}
           setCurrentUser={setCurrentUser}
+          handleLeftTrayClick={handleLeftTrayClick}
         />
       )}
 
@@ -52,7 +52,9 @@ function NavBar({ currentUser, setIsLoggedIn, setCurrentUser }) {
         <a
           className="flex items-center justify-center w-12 h-12 m-2 bg-neutral-300 hover:bg-white"
           href="#"
-          onClick={() => navigate("/courses")}
+          onClick={() => {
+            navigate("/courses");
+          }}
         >
           <svg
             className="w-10 h-10 stroke-current"

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-function Menu({ currentUser, currentName }) {
+function Menu({ currentUser, currentName, toNavigate }) {
   const [displayCourse, setDisplayCourse] = useState();
   const location = useLocation();
   function currentCourse() {}
@@ -11,17 +11,19 @@ function Menu({ currentUser, currentName }) {
     const component = location.pathname.split("/")[1];
     return component.charAt(0).toUpperCase() + component.slice(1);
   };
-
   return currentName ? (
     <>
       <div className="pl-24 pt-8 flex flex-row cursor-pointer">
         <div>
-          <p>
+          <p className="text-xl ">
             <img
-              className="h-10 w-10"
+              className="h-10 w-10 "
               src="https://www.svgrepo.com/show/511004/hamburger-md.svg"
             />{" "}
-            <button onClick={() => navigate("/courses")}>
+            <button
+              className="hover:underline"
+              onClick={() => navigate(toNavigate)}
+            >
               {getCurrentComponent()}
             </button>
             {"   "}
@@ -36,13 +38,13 @@ function Menu({ currentUser, currentName }) {
     <>
       <div className="pl-24 pt-8 flex flex-row cursor-pointer">
         <div>
-          <p>
+          <p className="text-xl">
             <img
               className="h-10 w-10"
               src="https://www.svgrepo.com/show/511004/hamburger-md.svg"
               // onClick={}
             />{" "}
-            <button onClick={() => navigate("/courses")}>
+            <button onClick={() => navigate(toNavigate)}>
               {getCurrentComponent()}
             </button>
             {"   "}

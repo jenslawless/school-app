@@ -1,9 +1,15 @@
 import React from "react";
+import Menu from "../components/Menu";
 
-function Tasks() {
+function Tasks({ currentName, currentUser }) {
   return (
     <>
-      <div className="pl-24 pt-8">Tasks</div>
+      <Menu
+        currentUser={currentUser}
+        currentName={currentName}
+        toNavigate={"/tasks"}
+      />
+      <div className="grid grid-cols-2 pl-24 pt-8">Tasks</div>
     </>
   );
 }

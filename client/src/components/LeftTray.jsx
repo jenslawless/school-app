@@ -1,8 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-function LeftTray({ currentUser, setIsLoggedIn, setCurrentUser }) {
+function LeftTray({
+  currentUser,
+  setIsLoggedIn,
+  setCurrentUser,
+  handleLeftTrayClick,
+}) {
   const navigate = useNavigate();
+
   function handleLogOut(e) {
     fetch("/api/logout", {
       method: "DELETE",
@@ -40,7 +46,10 @@ function LeftTray({ currentUser, setIsLoggedIn, setCurrentUser }) {
 
       <div
         className="cursor-pointer"
-        onClick={() => navigate("/account/settings")}
+        onClick={() => {
+          navigate("/account/settings");
+          handleLeftTrayClick();
+        }}
       >
         Settings
       </div>
@@ -52,15 +61,6 @@ function LeftTray({ currentUser, setIsLoggedIn, setCurrentUser }) {
       </button>
     </div>
   );
-}
-
-function showLeftTray() {
-  const leftTrayContainer = document.createElement("div");
-  leftTrayContainer.id = "left-tray-container"; // Optional: add an ID for further styling or manipulation
-  document.body.appendChild(leftTrayContainer);
-
-  // Render the LeftTray component inside the leftTrayContainer
-  ReactDOM.render(<LeftTray />, leftTrayContainer);
 }
 
 export default LeftTray;

@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios"; // Import axios for making API calls
-
-import { useNavigate } from "react-router-dom";
 
 function LoginModal({ setIsLoggedIn, setCurrentUser }) {
   // State and event listeners...
