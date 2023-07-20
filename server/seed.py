@@ -18,9 +18,9 @@ def seed_users():
         role_probability = random()
 
         if role_probability <= 0.25:
-            role = 'teacher'
+            role = 'Teacher'
         else:
-            role = 'student'
+            role = 'Student'
 
         user = User(
             name=fake.name(),
@@ -35,7 +35,7 @@ def seed_users():
 def seed_courses(users):
     courses = ["Algebra", "Physics", "English", "US History", "Ceramics", "Chemistry", "Art History"]
     course_list = []
-    teacher_ids = [user for user in users if user.role == 'teacher']
+    teacher_ids = [user for user in users if user.role == 'Teacher']
     # this line was added
     # student_users = [user for user in users if user.role == 'student']
     
@@ -57,7 +57,7 @@ def seed_courses(users):
 
 def seed_enrollments(courses, users):
     enrollments = []
-    student_users = [user for user in users if user.role == 'student']
+    student_users = [user for user in users if user.role == 'Student']
 
     for stu in student_users:
         num_enrollments = randint(2, 4)
@@ -72,7 +72,7 @@ def seed_enrollments(courses, users):
 
 def seed_assignments(courses, users):
     assignments = []
-    student_users = [user for user in users if user.role == 'student']
+    student_users = [user for user in users if user.role == 'Student']
 
 
     for course in courses:

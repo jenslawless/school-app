@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function CourseCard({ currentUser }) {
+function CourseCard({ currentUser, setCurrentName }) {
   const [courses, setCourses] = useState([]);
   const navigate = useNavigate();
 
@@ -24,9 +24,9 @@ function CourseCard({ currentUser }) {
       try {
         const res = await fetch(`/api/courses/${id}`);
         const myIndCourses = await res.json();
-        console.log(myIndCourses);
+        // setCurrentName(myIndCourses.name);
         // Now navigate to the individual course page
-        navigate(`/course/${id}`);
+        navigate(`/courses/${id}`);
       } catch (error) {
         console.error("Error fetching individual course:", error);
       }
@@ -37,18 +37,18 @@ function CourseCard({ currentUser }) {
   return (
     <>
       <div className="grid grid-cols-2 ">
-        <div className="grid grid-cols-2">
-          {courses.map((course) => (
+        <div className="grid grid-cols-2 ">
+          {currentUser.course_list.map((course) => (
             <div
               key={course.id}
               onClick={() => getIndCourses(course.id)}
-              className="pl-24 pt-8 cursor-pointer"
+              className="pl-24 pt-8 cursor-pointer "
             >
-              <div className="w-auto">
-                <p className="border-2 border-black bg-gray-500">
+              <div className="w-auto border-2 border-black rounded-md">
+                <p className="border-2 border-black bg-sky-800 text-white font-bold">
                   {course.name}
                 </p>
-                <p className="border-2 border-black bg-neutral-300">
+                <p className="border-2 border-black bg-neutral-300 italic">
                   Professor: {course.teacher.name}
                 </p>
                 <p className="border-2 border-black bg-neutral-300">

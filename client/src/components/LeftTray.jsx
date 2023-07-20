@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function LeftTray({ currentUser, setIsLoggedIn, setCurrentUser }) {
+  const navigate = useNavigate();
   function handleLogOut(e) {
     fetch("/api/logout", {
       method: "DELETE",
@@ -8,13 +10,13 @@ function LeftTray({ currentUser, setIsLoggedIn, setCurrentUser }) {
     }).then((r) => {
       if (r.ok) {
         setIsLoggedIn(false);
-        // setCurrentUser(false);
+        setCurrentUser(null);
       }
     });
   }
 
   return (
-    <div className="flex flex-col fixed left-20 items-center w-60 pt-8 h-2/3 text-gray-700 bg-neutral-300 m-0">
+    <div className="flex flex-col fixed left-20 items-center w-60 pt-8 h-2/3 bg-zinc-600 text-neutral-300 m-0 border-2 border-neutral-300">
       <div>
         <a className="flex items-center justify-center w-18 h-18 m-2 bg-white rounded-full">
           <svg
@@ -34,12 +36,20 @@ function LeftTray({ currentUser, setIsLoggedIn, setCurrentUser }) {
         </a>
       </div>
       <div className="text-xl border-b-2 border-black">{currentUser.name}</div>
+      <div className="text-xl ">{currentUser.role}</div>
+
       <div
+        className="cursor-pointer"
+        onClick={() => navigate("/account/settings")}
+      >
+        Settings
+      </div>
+      <button
         onClick={handleLogOut}
-        className="border-black rounded border-2 mt-4"
+        className="border-slate-300 rounded border-2 mt-4 cursor-pointer"
       >
         Logout
-      </div>
+      </button>
     </div>
   );
 }

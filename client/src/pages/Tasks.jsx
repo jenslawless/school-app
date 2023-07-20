@@ -3,7 +3,7 @@ import React from "react";
 function Tasks() {
   return (
     <>
-      <div class="pl-24 pt-8">Tasks</div>
+      <div className="pl-24 pt-8">Tasks</div>
     </>
   );
 }

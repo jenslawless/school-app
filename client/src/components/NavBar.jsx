@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import LoginModal from "./LoginModal";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import LeftTray from "./LeftTray";
-
 
 function NavBar({ currentUser, setIsLoggedIn }) {
   const navigate = useNavigate();
@@ -11,7 +10,7 @@ function NavBar({ currentUser, setIsLoggedIn }) {
   const handleLeftTrayClick = () => {
     setIsLeftTrayVisible(!isLeftTrayVisible);
   };
-  console.log(currentUser);
+  // console.log(currentUser);
   return (
     <div className="flex flex-col fixed left-0 items-center w-20 pt-8 h-screen text-gray-700 bg-zinc-600 m-0">
       <div>
@@ -279,9 +278,14 @@ function NavBar({ currentUser, setIsLoggedIn }) {
         </a>
         <p className=" items-center text-s text-gray-300 ">Help</p>
       </div>
+      <a
+        className="flex items-center justify-center w-12 h-12 m-2 bg-neutral-300 hover:bg-white"
+        href="#"
+      >
+        <svg></svg>
+      </a>
     </div>
   );
 }
 
 export default NavBar;
-

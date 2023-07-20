@@ -3,7 +3,7 @@ import React from "react";
 function Messages() {
   return (
     <>
-      <div class="pl-24 pt-8">Messages</div>
+      <div className="pl-24 pt-8">Messages</div>
     </>
   );
 }

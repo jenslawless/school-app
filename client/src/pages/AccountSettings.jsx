@@ -1,9 +1,14 @@
 import React from "react";
 
-function AccountSettings() {
+function AccountSettings({ currentUser }) {
   return (
     <>
-      <div class="pl-24 pt-8">Account Settings</div>
+      <div className="pl-24 pt-8">
+        {currentUser.name}
+        <button className="pl-24 pt-8">Edit</button>
+      </div>
+      <div className="pl-24 pt-8">{currentUser.email}</div>
+      <div className="pl-24 pt-8">{currentUser.role}</div>
     </>
   );
 }

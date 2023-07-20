@@ -15,27 +15,25 @@ import { useEffect } from "react";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState("")
+  const [currentUser, setCurrentUser] = useState("");
 
   useEffect(() => {
-    fetch('/api/check_session')
-      .then((r) => {
-        if (r.ok) {
-          r.json()
-            .then((currentUser) => {
-              setCurrentUser(currentUser)
-              setIsLoggedIn(true)
-            })
-        }
-      })
+    fetch("/api/check_session").then((r) => {
+      if (r.ok) {
+        r.json().then((currentUser) => {
+          setCurrentUser(currentUser);
+          setIsLoggedIn(true);
+        });
+      }
+    });
   }, []);
-  console.log(currentUser)
+  // console.log(currentUser);
 
   return isLoggedIn ? (
     <BrowserRouter>
       <nav>
         <NavBar currentUser={currentUser} setIsLoggedIn={setIsLoggedIn} />
-        <RightBar currentUser={currentUser} setIsLoggedIn={setIsLoggedIn} />
+        <RightBar currentUser={currentUser} />
       </nav>
       <Routes>
         <Route
@@ -43,7 +41,7 @@ function App() {
           element={<Courses currentUser={currentUser} />}
         />
         <Route
-          path="course/:id"
+          path="courses/:id"
           element={<Course currentUser={currentUser} />}
         />
         <Route

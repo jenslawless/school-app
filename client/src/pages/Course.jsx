@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import Assignments from "../components/Assignments";
 import Menu from "../components/Menu";
 
-function Course() {
+function Course({ currentUser }) {
+  const [currentName, setCurrentName] = useState("");
   return (
     <div>
-      <Menu />
-      <Assignments />
+      <Menu currentUser={currentUser} currentName={currentName} />
+      <Assignments setCurrentName={setCurrentName} />
     </div>
   );
 }
