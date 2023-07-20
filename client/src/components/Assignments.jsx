@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 
 function Assignments({ setCurrentName, currentUser }) {
   const [assignments, setAssignments] = useState([]);
+  const [currentCourse, setCurrentCourse] = useState([])
   const { id } = useParams();
 
   //   console.log(id);
@@ -12,6 +13,7 @@ function Assignments({ setCurrentName, currentUser }) {
       try {
         const res = await fetch(`/api/courses/${id}`);
         const myAssignments = await res.json();
+        setCurrentCourse(myAssignments)
         setAssignments(myAssignments.assignments); // Update the assignments state with fetched data
         setCurrentName(myAssignments.name);
       } catch (error) {
@@ -25,7 +27,8 @@ function Assignments({ setCurrentName, currentUser }) {
     getAssignments(); // Call getAssignments when the component mounts
   }, []);
 
-  console.log(currentUser);
+  // // console.log(currentUser);
+  // console.log(currentCourse)
 
   return (
     <>
@@ -47,14 +50,23 @@ function Assignments({ setCurrentName, currentUser }) {
                     </p>
                     <p className="border-2 border-black bg-neutral-300 w-16">
                       Grade: {grade ? grade.value : "Not graded"}%
-                      {/* Display the grade value if it exists, otherwise show "Not graded" */}
                     </p>
                   </div>
                 </div>
               );
             })
           ) : (
-            <h1>Teacher</h1>
+            <>
+              <h1>Students:</h1>
+              {
+                currentCourse.students?.map((stu) => (
+                  <div className="space-x-1" key={stu.id}>
+                    {stu.name}
+                  </div>
+                )
+                )
+              }
+            </>
           )}
         </div>
       </div>
