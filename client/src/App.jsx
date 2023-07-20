@@ -16,7 +16,6 @@ import { useEffect } from "react";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState("");
-  console.log(currentUser);
   useEffect(() => {
     fetch("/api/check_session").then((r) => {
       if (r.ok) {
@@ -27,7 +26,6 @@ function App() {
       }
     });
   }, []);
-  // console.log(currentUser);
 
   return isLoggedIn ? (
     <BrowserRouter>
