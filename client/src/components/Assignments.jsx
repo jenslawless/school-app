@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-function Assignments({ setCurrentName }) {
+function Assignments({ setCurrentName }{ currentUser }) {
   const [assignments, setAssignments] = useState([]);
   const { id } = useParams();
 
@@ -25,30 +25,38 @@ function Assignments({ setCurrentName }) {
     getAssignments(); // Call getAssignments when the component mounts
   }, []);
 
+  console.log(currentUser)
+
   return (
     <>
-      <div className="grid grid-cols-1 pl-24 pt-8">
-        <div>Assignments:</div>
-        <div className="grid grid-cols-2 max-w-xl h-4 w-auto">
-          {assignments.map(
-            (
-              assignment,
-              index // Use a different name for the map variable (e.g., 'assignment' instead of 'assignments')
-            ) => (
-              <div key={index}>
-                <div>
-                  <p className="border-2 border-black">
-                    {assignment.description}
-                  </p>{" "}
-                  {/* Render the specific assignment property (e.g., assignment.title) */}
+      <div className="grid grid-cols-2 pl-24 pt-8">
+        <div className="grid grid-cols-2">
+          {currentUser.role === "Student" ? (
+            assignments.map((assignment, index) => {
+              // Find the grade for the current assignment
+              const grade = currentUser.grades.find(
+                (g) => g.assignment_id === assignment.id
+              );
+
+              return (
+                <div key={index}>
+                  <div>
+                    <p className="border-2 border-black">
+                      {assignment.description}
+                      Grade: {grade ? grade.value : "Not graded"} {/* Display the grade value if it exists, otherwise show "Not graded" */}
+                    </p>{" "}
+                  </div>
                 </div>
-              </div>
-            )
+              );
+            })
+          ) : (
+            <h1>Teacher</h1>
           )}
         </div>
       </div>
     </>
   );
 }
+
 
 export default Assignments;

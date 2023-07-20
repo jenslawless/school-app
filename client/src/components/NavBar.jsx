@@ -10,7 +10,6 @@ function NavBar({ currentUser, setIsLoggedIn }) {
   const handleLeftTrayClick = () => {
     setIsLeftTrayVisible(!isLeftTrayVisible);
   };
-  // console.log(currentUser);
   return (
     <div className="flex flex-col fixed left-0 items-center w-20 pt-8 h-screen text-gray-700 bg-zinc-600 m-0">
       <div>

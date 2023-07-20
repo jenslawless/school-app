@@ -55,25 +55,7 @@ class CheckSession(Resource):
             return user.to_dict()
         else:
             return {}, 401
-
-# # @app.route('/')
-# # def index():
-# #     return '<h1>Phase 4 Project</h1>'
-
-# @app.route('/dashboard')
-# @login_required
-# def dashboard():
-#     if current_user.role == 'teacher':
-#         # Show teacher dashboard
-#         return render_template('teacher_dashboard.html')
-#     elif current_user.role == 'student':
-#         # Show student dashboard
-#         return render_template('student_dashboard.html')
-#     else:
-#         # Handle other roles or cases if needed
-#         return "Unauthorized"
-
-
+            
 class Courses(Resource):
     def get(self):
         courses = Course.query.all()

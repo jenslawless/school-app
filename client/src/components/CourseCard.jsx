@@ -36,27 +36,46 @@ function CourseCard({ currentUser, setCurrentName }) {
 
   return (
     <>
-      <div className="grid grid-cols-2 ">
-        <div className="grid grid-cols-2 ">
-          {currentUser.course_list.map((course) => (
-            <div
-              key={course.id}
-              onClick={() => getIndCourses(course.id)}
-              className="pl-24 pt-8 cursor-pointer "
-            >
-              <div className="w-auto border-2 border-black rounded-md">
-                <p className="border-2 border-black bg-sky-800 text-white font-bold">
-                  {course.name}
-                </p>
-                <p className="border-2 border-black bg-neutral-300 italic">
-                  Professor: {course.teacher.name}
-                </p>
-                <p className="border-2 border-black bg-neutral-300">
-                  Course Description: {course.description}
-                </p>
-              </div>
-            </div>
-          ))}
+      <div className="grid grid-cols-2">
+        <div className="grid grid-cols-2">
+          {currentUser.role === "Student"
+            ? // Content for student
+              currentUser.course_list.map((course) => (
+                <div
+                  key={course.id}
+                  onClick={() => getIndCourses(course.id)}
+                  className="pl-24 pt-8 cursor-pointer"
+                >
+                  <div className="w-auto">
+                    <p className="border-2 border-black bg-gray-500">
+                      {course.name}
+                    </p>
+                    <p className="border-2 border-black bg-neutral-300">
+                      Professor: {course.teacher.name}
+                    </p>
+                    <p className="border-2 border-black bg-neutral-300">
+                      Course Description: {course.description}
+                    </p>
+                  </div>
+                </div>
+              ))
+            : // Content for teacher
+              currentUser.courses.map((course) => (
+                <div
+                  key={course.id}
+                  onClick={() => getIndCourses(course.id)}
+                  className="pl-24 pt-8 cursor-pointer"
+                >
+                  <div className="w-auto">
+                    <p className="border-2 border-black bg-gray-500">
+                      {course.name}
+                    </p>
+                    <p className="border-2 border-black bg-neutral-300">
+                      Course Description: {course.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
         </div>
       </div>
     </>
