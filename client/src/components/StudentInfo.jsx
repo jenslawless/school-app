@@ -53,12 +53,23 @@ function StudentInfo({ setCurrentNewName }) {
             });
     }
 
+    const totalGrades = currentCourse.assignments.reduce((sum, ass) => {
+        const grade = updatedStudentInfo.grades.find((g) => g.assignment_id === ass.id);
+        return sum + (grade ? grade.value : 0);
+    }, 0);
+
+    const averageGrade = totalGrades / currentCourse.assignments.length;
+
     return (
         <>
-            <div className="pl-24 pt-8">Student Name: {updatedStudentInfo.name}</div>
-            <div className="pl-24 pt-8">Course Name: {currentCourse.name}</div>
             <div className="pl-24 pt-8">
+                Average Course Grade: {averageGrade.toFixed(2)}%
+                <br />
+                <br />
+
                 Assignments:{" "}
+                <br />
+                <br />
                 {currentCourse.assignments.map((ass) => {
                     const grade = updatedStudentInfo.grades.find(
                         (g) => g.assignment_id === ass.id

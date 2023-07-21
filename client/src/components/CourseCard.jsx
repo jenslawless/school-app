@@ -32,6 +32,26 @@ function CourseCard({ currentUser, setCurrentName }) {
     fetchIndCourses(id);
   }
 
+  function calculateAverageGrade(course) {
+
+    if (currentUser.role === "Student" && currentUser.grades) {
+      console.log("currentUser.grades:", currentUser.grades);
+      const gradesForCourse = currentUser.grades.filter(
+        (grade) => grade.assignment.course_id === course.id
+      );
+      console.log("gradesForCourse:", gradesForCourse);
+      if (gradesForCourse.length > 0) {
+        const sumGrades = gradesForCourse.reduce(
+          (total, grade) => total + grade.value,
+          0
+        );
+        const averageGrade = sumGrades / gradesForCourse.length;
+        return averageGrade.toFixed(2);
+      }
+    }
+    return "N/A";
+  }
+
   return (
     <>
       <div className="grid grid-cols-2">
@@ -46,7 +66,7 @@ function CourseCard({ currentUser, setCurrentName }) {
               >
                 <div className="w-auto">
                   <p className="border-2 border-black bg-cyan-800 text-white font-bold">
-                    {course.name}
+                    {course.name} - Overall Grade: {calculateAverageGrade(course)}%
                   </p>
                   <p className="border-2 border-black bg-neutral-300 italic">
                     Professor: {course.teacher.name}
