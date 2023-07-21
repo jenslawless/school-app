@@ -11,6 +11,7 @@ import ErrorPage from "./pages/ErrorPage";
 import RightBar from "./components/RightBar";
 import Course from "./pages/Course";
 import LoginPage from "./pages/LoginPage";
+import StudentPage from "./pages/StudentPage";
 import { useEffect } from "react";
 import StudentPage from "./pages/StudentPage";
 

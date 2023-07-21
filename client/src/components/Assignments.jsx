@@ -7,8 +7,6 @@ function Assignments({ setCurrentName, currentUser }) {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  //   console.log(id);
-
   function getAssignments() {
     const fetchAssignments = async () => {
       try {
@@ -28,20 +26,20 @@ function Assignments({ setCurrentName, currentUser }) {
     getAssignments(); // Call getAssignments when the component mounts
   }, []);
 
-  // // console.log(currentUser);
-  // console.log(currentCourse)
-
-  function getIndStudent(id) {
+  function getIndStudent(id, courseData) {
+    console.log(currentCourse);
     const fetchIndStudent = async (id) => {
       try {
         const res = await fetch(`/api/students/${id}`);
         const myIndStudent = await res.json();
-
-        navigate(`/students/${id}`);
+        navigate(`/students/${id}`, {
+          state: { studentInfo: myIndStudent, currentCourse: courseData },
+        });
       } catch (error) {
         console.error("Error fetching individual student:", error);
       }
     };
+    console.log("getting here", currentCourse);
     fetchIndStudent(id);
   }
 
