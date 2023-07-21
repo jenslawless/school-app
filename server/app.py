@@ -26,8 +26,11 @@ db.init_app(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'  # Replace 'login' with the endpoint of your login route
 
+users = current_user
+
 api = Api(app)
 CORS(app)
+
 
 class Login(Resource):
 
@@ -83,6 +86,7 @@ class Students(Resource):
         
         return make_response(students_serialized, 200)
 
+
 class Assignments(Resource):
 
     def get(self):
@@ -94,12 +98,29 @@ class Assignments(Resource):
     
 class IndStudent(Resource):
     def get(self, id):
-        student = User.query.filter(id==id).first()
+        student = User.query.filter_by(id=id).first()
         if student:
-            return make_response(student.to_dict(),200)
+            return make_response(student.to_dict(), 200)
         else:
-            return make_response({"error": "Student not found."})
+            return make_response({"error": "Student not found."}, 404)
 
+    def patch(self, id):
+        data = request.get_json()
+
+        # Retrieve the student record from the database
+        student = User.query.filter_by(id=id).first()
+        if not student:
+            return make_response({"error": "Student not found."}, 404)
+
+        # Update the student record with the data from the request
+        student.name = data.get("name", student.name)
+        student.email = data.get("email", student.email)
+        student.role = data.get("role", student.role)
+
+        # Commit the changes to the database
+        db.session.commit()
+
+        return make_response(student.to_dict(), 200)
 
 
 
