@@ -106,30 +106,42 @@ class IndStudent(Resource):
     def patch(self, id):
         data = request.get_json()
 
-        # Retrieve the student record from the database
         student = User.query.filter_by(id=id).first()
         if not student:
             return make_response({"error": "Student not found."}, 404)
 
-        # Update the student record with the data from the request
         student.name = data.get("name", student.name)
         student.email = data.get("email", student.email)
         student.role = data.get("role", student.role)
-
-        # Commit the changes to the database
         db.session.commit()
 
         return make_response(student.to_dict(), 200)
 
+class Grades(Resource):
+    def patch(self, student_id, assignment_id):
+        data = request.get_json()
+        new_grade_value = data.get("value")
 
 
-class IndStudent(Resource):
-    def get(self, id):
-        student = User.query.filter_by(id=id).first();
-        if student:
-            return make_response(student.to_dict(),200)
+        student = User.query.filter_by(id=student_id, role='Student').first()
+        assignment = Assignment.query.filter_by(id=assignment_id).first()
+
+        if not student or not assignment:
+            return make_response({"error": "Student or assignment not found."}, 404)
+
+        existing_grade = Grade.query.filter_by(student_id=student.id, assignment_id=assignment.id).first()
+
+        if existing_grade:
+            existing_grade.value = new_grade_value
         else:
-            return make_response({"error": "Student not found."})
+            new_grade = Grade(value=new_grade_value, student=student, assignment=assignment)
+            db.session.add(new_grade)
+        
+        db.session.commit()
+
+        return make_response({"message": "Grade updated successfully."}, 200)
+
+
 
 
 api.add_resource(Courses, '/courses')
@@ -137,11 +149,12 @@ api.add_resource(Students, '/students')
 api.add_resource(IndStudent, '/students/<int:id>')
 api.add_resource(Assignments, '/assignments')
 api.add_resource(IndividualCourse, '/courses/<int:id>')
+api.add_resource(Grades, '/students/<int:student_id>/grades/<int:assignment_id>')
 
 api.add_resource(Login, '/login')
 api.add_resource(Logout, '/logout')
 api.add_resource(CheckSession, '/check_session')
-api.add_resource(IndStudent, '/students/<int:id>')
+
 
 
 

@@ -26,21 +26,20 @@ function Assignments({ setCurrentName, currentUser }) {
     getAssignments(); // Call getAssignments when the component mounts
   }, []);
 
-  function getIndStudent(id, courseData) {
-    console.log(currentCourse);
-    const fetchIndStudent = async (id) => {
+  function getIndStudent(stuId, courseData, currentUser) {
+    // console.log(currentUser);
+    const fetchIndStudent = async (stuId) => {
       try {
-        const res = await fetch(`/api/students/${id}`);
+        const res = await fetch(`/api/students/${stuId}`);
         const myIndStudent = await res.json();
-        navigate(`/students/${id}`, {
-          state: { studentInfo: myIndStudent, currentCourse: courseData },
+        navigate(`students/${stuId}`, {
+          state: { studentInfo: myIndStudent, currentCourse: courseData, currentUser: currentUser },
         });
       } catch (error) {
         console.error("Error fetching individual student:", error);
       }
     };
-    console.log("getting here", currentCourse);
-    fetchIndStudent(id);
+    fetchIndStudent(stuId);
   }
 
   return (
@@ -75,7 +74,7 @@ function Assignments({ setCurrentName, currentUser }) {
                 <div className="space-x-1" key={stu.id}>
                   <div
                     className="cursor-pointer"
-                    onClick={() => getIndStudent(stu.id, currentCourse)}
+                    onClick={() => getIndStudent(stu.id, currentCourse, currentUser)}
                   >
                     {stu.name}
                   </div>
