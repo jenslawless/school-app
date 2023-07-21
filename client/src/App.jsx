@@ -13,7 +13,6 @@ import Course from "./pages/Course";
 import LoginPage from "./pages/LoginPage";
 import StudentPage from "./pages/StudentPage";
 import { useEffect } from "react";
-import StudentPage from "./pages/StudentPage";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

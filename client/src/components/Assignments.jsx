@@ -75,7 +75,7 @@ function Assignments({ setCurrentName, currentUser }) {
                 <div className="space-x-1" key={stu.id}>
                   <div
                     className="cursor-pointer"
-                    onClick={() => getIndStudent(stu.id)}
+                    onClick={() => getIndStudent(stu.id, currentCourse)}
                   >
                     {stu.name}
                   </div>
