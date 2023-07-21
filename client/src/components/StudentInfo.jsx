@@ -19,9 +19,9 @@ function StudentInfo({ }) {
                 const grade = studentInfo.grades.find((g) => g.assignment_id === ass.id);
                 return (
                     <>
-                        <li>{ass.description}</li>
-                        <li>{grade.value}</li>
-
+                        <p>
+                            <li>{ass.description}: {grade.value}%</li>
+                        </p>
                     </>
                 )
             })}</div>
