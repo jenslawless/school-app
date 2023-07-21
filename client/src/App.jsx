@@ -11,6 +11,7 @@ import ErrorPage from "./pages/ErrorPage";
 import RightBar from "./components/RightBar";
 import Course from "./pages/Course";
 import LoginPage from "./pages/LoginPage";
+import StudentPage from "./pages/StudentPage";
 import { useEffect } from "react";
 
 function App() {
@@ -61,6 +62,7 @@ function App() {
         />
         <Route path="help" element={<Help currentUser={currentUser} />} />
         <Route path="*" element={<ErrorPage currentUser={currentUser} />} />
+        <Route path="students/:id" element={<StudentPage />} />
       </Routes>
     </BrowserRouter>
   ) : (

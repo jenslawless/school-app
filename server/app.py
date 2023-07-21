@@ -22,7 +22,6 @@ migrate = Migrate(app, db)
 
 db.init_app(app)
 
-# Initialize Flask-Login
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'  # Replace 'login' with the endpoint of your login route
 
@@ -55,7 +54,7 @@ class CheckSession(Resource):
             return user.to_dict()
         else:
             return {}, 401
-            
+
 class Courses(Resource):
     def get(self):
         courses = Course.query.all()
@@ -76,7 +75,7 @@ class IndividualCourse(Resource):
 
 class Students(Resource):
     def get(self):
-        students = User.query.filter(User.role == 'student').all()
+        students = User.query.filter(User.role == 'Student').all()
         students_serialized = []
         for stu in students:
             students_serialized.append(stu.to_dict())
@@ -92,9 +91,18 @@ class Assignments(Resource):
             assignments_serialized.append(ass.to_dict())
         return make_response(assignments_serialized, 200)
 
+class IndStudent(Resource):
+    def get(self, id):
+        student = User.query.filter_by(id=id).first();
+        if student:
+            return make_response(student.to_dict(),200)
+        else:
+            return make_response({"error": "Student not found."})
+
 
 api.add_resource(Courses, '/courses')
 api.add_resource(Students, '/students')
+api.add_resource(IndStudent, '/students/<int:id>')
 api.add_resource(Assignments, '/assignments')
 api.add_resource(IndividualCourse, '/courses/<int:id>')
 

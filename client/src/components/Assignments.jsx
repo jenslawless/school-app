@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 function Assignments({ setCurrentName, currentUser }) {
   const [assignments, setAssignments] = useState([]);
-  const [currentCourse, setCurrentCourse] = useState([])
+  const [currentCourse, setCurrentCourse] = useState([]);
   const { id } = useParams();
+  const navigate = useNavigate();
 
-  //   console.log(id);
+
 
   function getAssignments() {
     const fetchAssignments = async () => {
       try {
         const res = await fetch(`/api/courses/${id}`);
         const myAssignments = await res.json();
-        setCurrentCourse(myAssignments)
+        setCurrentCourse(myAssignments);
         setAssignments(myAssignments.assignments); // Update the assignments state with fetched data
         setCurrentName(myAssignments.name);
       } catch (error) {
@@ -27,8 +28,22 @@ function Assignments({ setCurrentName, currentUser }) {
     getAssignments(); // Call getAssignments when the component mounts
   }, []);
 
-  // // console.log(currentUser);
-  // console.log(currentCourse)
+
+  function getIndStudent(id, courseData) {
+    console.log(currentCourse)
+    const fetchIndStudent = async (id) => {
+      try {
+        const res = await fetch(`/api/students/${id}`);
+        const myIndStudent = await res.json();
+        navigate(`/students/${id}`, { state: { studentInfo: myIndStudent, currentCourse: courseData } });
+      } catch (error) {
+        console.error("Error fetching individual student:", error);
+      }
+    };
+    console.log("getting here", currentCourse)
+    fetchIndStudent(id);
+  }
+
 
   return (
     <>
@@ -58,14 +73,16 @@ function Assignments({ setCurrentName, currentUser }) {
           ) : (
             <>
               <h1>Students:</h1>
-              {
-                currentCourse.students?.map((stu) => (
-                  <div className="space-x-1" key={stu.id}>
+              {currentCourse.students?.map((stu) => (
+                <div className="space-x-1" key={stu.id}>
+                  <div
+                    className="cursor-pointer"
+                    onClick={() => getIndStudent(stu.id, currentCourse)}
+                  >
                     {stu.name}
                   </div>
-                )
-                )
-              }
+                </div>
+              ))}
             </>
           )}
         </div>
