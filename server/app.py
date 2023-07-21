@@ -112,7 +112,9 @@ class IndStudent(Resource):
 
         student.name = data.get("name", student.name)
         student.email = data.get("email", student.email)
-        student.role = data.get("role", student.role)
+        
+
+        # Commit the changes to the database
         db.session.commit()
 
         return make_response(student.to_dict(), 200)
