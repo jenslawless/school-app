@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import RightBar from "./RightBar";
 
 function Assignments({ setCurrentName, currentUser }) {
   const [assignments, setAssignments] = useState([]);
   const [currentCourse, setCurrentCourse] = useState([]);
+  const [shuffledAssignments, setShuffledAssignments] = useState([]); // State for shuffled assignments
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -26,22 +28,37 @@ function Assignments({ setCurrentName, currentUser }) {
     getAssignments(); // Call getAssignments when the component mounts
   }, []);
 
-  function getIndStudent(id, courseData) {
+  function getIndStudent(stuId, courseData) {
     console.log(currentCourse);
-    const fetchIndStudent = async (id) => {
+    const fetchIndStudent = async (stuId) => {
       try {
-        const res = await fetch(`/api/students/${id}`);
+        const res = await fetch(`/api/students/${stuId}`);
         const myIndStudent = await res.json();
-        navigate(`/students/${id}`, {
+        navigate(`students/${stuId}`, {
           state: { studentInfo: myIndStudent, currentCourse: courseData },
         });
       } catch (error) {
-        console.error("Error fetching individual student:", error);
+        console.error("Error fetching indivstuIdual student:", error);
       }
     };
     console.log("getting here", currentCourse);
-    fetchIndStudent(id);
+    fetchIndStudent(stuId);
   }
+
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
+  useEffect(() => {
+    if (currentUser.role === "Student") {
+      const shuffledAssignments = [...assignments];
+      shuffleArray(shuffledAssignments);
+      setAssignments(shuffledAssignments);
+    }
+  }, [currentUser.role]);
 
   return (
     <>
@@ -57,10 +74,10 @@ function Assignments({ setCurrentName, currentUser }) {
               return (
                 <div className="space-x-1" key={index}>
                   <div className="grid grid-cols-2 ">
-                    <p className="border-2 border-black bg-cyan-800 text-white font-bold">
+                    <div className="border-2 border-black bg-cyan-800 text-white font-bold">
                       Assignment:{" "}
                       <p className="font-normal">{assignment.description}</p>
-                    </p>
+                    </div>
                     <p className="border-2 border-black bg-neutral-300 w-16">
                       Grade: {grade ? grade.value : "Not graded"}%
                     </p>

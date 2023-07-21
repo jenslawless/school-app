@@ -62,7 +62,7 @@ function App() {
         />
         <Route path="help" element={<Help currentUser={currentUser} />} />
         <Route path="*" element={<ErrorPage currentUser={currentUser} />} />
-        <Route path="students/:id" element={<StudentPage />} />
+        <Route path="courses/:id/students/:id1" element={<StudentPage />} />
       </Routes>
     </BrowserRouter>
   ) : (

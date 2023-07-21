@@ -11,16 +11,13 @@ const validationSchema = Yup.object().shape({
 function AccountSettings({ currentUser }) {
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      const response = await fetch(
-        `http://localhost:5555/api/users/${currentUser.id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(values),
-        }
-      );
+      const response = await fetch(`/api/students/${currentUser.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
 
       if (!response.ok) {
         throw new Error("Failed to update user data.");
@@ -28,6 +25,7 @@ function AccountSettings({ currentUser }) {
 
       // Handle success, e.g., show a success message to the user.
       console.log("User data updated successfully.");
+      window.location.reload();
     } catch (error) {
       // Handle errors, e.g., show an error message to the user.
       console.error("Error updating user data:", error.message);
@@ -49,19 +47,23 @@ function AccountSettings({ currentUser }) {
       {({ isSubmitting }) => (
         <Form>
           <div className="pl-24 pt-8">
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name: </label>
             <Field type="text" id="name" name="name" />
             <ErrorMessage name="name" component="div" className="error" />
           </div>
 
           <div className="pl-24 pt-8">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Email: </label>
             <Field type="email" id="email" name="email" />
             <ErrorMessage name="email" component="div" className="error" />
           </div>
 
           <div className="pl-24 pt-8">
-            <button type="submit" disabled={isSubmitting}>
+            <button
+              className="border-2 border-black rounded-md"
+              type="submit"
+              disabled={isSubmitting}
+            >
               Save
             </button>
           </div>

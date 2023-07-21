@@ -114,22 +114,13 @@ class IndStudent(Resource):
         # Update the student record with the data from the request
         student.name = data.get("name", student.name)
         student.email = data.get("email", student.email)
-        student.role = data.get("role", student.role)
+        
 
         # Commit the changes to the database
         db.session.commit()
 
         return make_response(student.to_dict(), 200)
 
-
-
-class IndStudent(Resource):
-    def get(self, id):
-        student = User.query.filter_by(id=id).first();
-        if student:
-            return make_response(student.to_dict(),200)
-        else:
-            return make_response({"error": "Student not found."})
 
 
 api.add_resource(Courses, '/courses')
@@ -141,7 +132,7 @@ api.add_resource(IndividualCourse, '/courses/<int:id>')
 api.add_resource(Login, '/login')
 api.add_resource(Logout, '/logout')
 api.add_resource(CheckSession, '/check_session')
-api.add_resource(IndStudent, '/students/<int:id>')
+
 
 
 

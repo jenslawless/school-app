@@ -1,18 +1,17 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
-function StudentInfo({}) {
+function StudentInfo({ setCurrentNewName }) {
   const location = useLocation();
   const studentInfo = location.state?.studentInfo || null;
   const currentCourse = location.state?.currentCourse || null;
-
-  console.log(studentInfo);
   console.log(currentCourse);
-
+  useEffect(() => {
+    setCurrentNewName(currentCourse.name);
+  }, []);
   return (
     <>
-      <div className="pl-24 pt-8">Student Name: {studentInfo.name}</div>
-      <div className="pl-24 pt-8">Course Name: {currentCourse.name}</div>
       <div className="pl-24 pt-8">
         Assignments:{" "}
         {currentCourse.assignments.map((ass) => {
