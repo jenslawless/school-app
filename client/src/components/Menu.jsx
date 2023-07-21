@@ -6,12 +6,8 @@ function Menu({ currentUser, currentName, toNavigate }) {
   const location = useLocation();
   const [displayCourse, setDisplayCourse] = useState();
   const studentInfo = location.state?.studentInfo || null;
-  console.log(studentInfo);
-  // function currentCourse() {}
+
   const navigate = useNavigate();
-  console.log(id);
-  console.log(id1);
-  console.log(currentName);
   const courseId = location.pathname.split("/")[2];
 
   const getCurrentComponent = () => {
@@ -87,7 +83,7 @@ function Menu({ currentUser, currentName, toNavigate }) {
             <img
               className="h-10 w-10"
               src="https://www.svgrepo.com/show/511004/hamburger-md.svg"
-              // onClick={}
+            // onClick={}
             />{" "}
             <button onClick={() => navigate(toNavigate)}>
               {getCurrentComponent()}

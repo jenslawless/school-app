@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
-function StudentInfo({ }) {
+function StudentInfo({ setCurrentNewName }) {
     const location = useLocation();
     const studentInfo = location.state?.studentInfo || null;
     const currentCourse = location.state?.currentCourse || null;
     const currentUser = location.state?.currentUser || null;
+    useEffect(() => {
+        setCurrentNewName(currentCourse.name);
+    }, []);
 
     const [updatedStudentInfo, setUpdatedStudentInfo] = useState(studentInfo);
 
